@@ -1,0 +1,142 @@
+/* Hero Section Styles */
+.hero {
+    min-height: 0vh;
+    display: flex;
+    align-items: center;
+    background: var(--bg-primary);
+    position: relative;
+    overflow: hidden;
+    padding-top: 0;
+    padding-bottom: 0rem;
+    margin-top: 0;
+}
+
+.hero-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.hero-grid {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: linear-gradient(rgba(0, 212, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 212, 255, 0.03) 1px, transparent 1px);
+    background-size: 50px 50px;
+    animation: gridMove 20s linear infinite;
+}
+
+@keyframes gridMove {
+    0% {
+        transform: translate(0, 0);
+    }
+
+    100% {
+        transform: translate(50px, 50px);
+    }
+}
+
+.hero-particles {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: var(--primary-color);
+    border-radius: 50%;
+    opacity: 0.6;
+    animation: float 15s infinite ease-in-out;
+    box-shadow: 0 0 10px var(--primary-color);
+}
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0) translateX(0);
+    }
+
+    50% {
+        transform: translateY(-30px) translateX(30px);
+    }
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    margin-top: -10000px;
+}
+
+.hero-profile-card,
+.hero-cta-section {
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 2rem;
+    margin-top: 2rem;
+}
+
+.profile-image-hero {
+    width: 150px;
+    height: 150px;
+    margin: 0 auto 1.5rem;
+}
+
+.profile-frame {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    padding: 4px;
+    background: var(--gradient-rainbow);
+    box-shadow: 0 0 30px rgba(0, 212, 255, 0.5);
+    animation: profileGlow 3s ease-in-out infinite;
+}
+
+@keyframes profileGlow {
+
+    0%,
+    100% {
+        box-shadow: 0 0 30px rgba(0, 212, 255, 0.5);
+    }
+
+    50% {
+        box-shadow: 0 0 50px rgba(0, 212, 255, 0.8);
+    }
+}
+
+.profile-img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--bg-primary);
+}
+
+@media (max-width: 768px) {
+    .hero {
+        min-height: auto;
+        align-items: flex-start;
+        padding-top: 2rem;
+        padding-bottom: 3rem;
+    }
+
+    .profile-image-hero {
+        width: 120px;
+        height: 120px;
+    }
+}

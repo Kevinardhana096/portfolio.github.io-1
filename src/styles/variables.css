@@ -1,0 +1,97 @@
+/* CSS Variables & Global Styles */
+:root {
+    --primary-color: #00d4ff;
+    --secondary-color: #0066ff;
+    --accent-color: #ff6b35;
+    --accent-purple: #a855f7;
+    --accent-pink: #ec4899;
+    --accent-green: #10b981;
+    --bg-primary: #0a0f1c;
+    --bg-secondary: #1a1f2e;
+    --bg-tertiary: #242938;
+    --text-primary: #ffffff;
+    --text-secondary: #b8c5d6;
+    --text-muted: #8892a4;
+    --border-color: #2d3748;
+    --success-color: #10b981;
+    --gradient-primary: linear-gradient(135deg, #00d4ff 0%, #0066ff 100%);
+    --gradient-secondary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --gradient-accent: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    --gradient-rainbow: linear-gradient(135deg, #00d4ff 0%, #a855f7 50%, #ec4899 100%);
+    --gradient-aurora: linear-gradient(135deg, #00d4ff 0%, #10b981 50%, #a855f7 100%);
+    --shadow-small: 0 2px 4px rgba(0, 0, 0, 0.1);
+    --shadow-medium: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --shadow-large: 0 10px 15px rgba(0, 0, 0, 0.1);
+    --shadow-glow: 0 0 20px rgba(0, 212, 255, 0.3);
+    --shadow-glow-strong: 0 0 40px rgba(0, 212, 255, 0.4);
+    --glass-bg: rgba(255, 255, 255, 0.03);
+    --glass-border: rgba(255, 255, 255, 0.1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+*::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 80px;
+    overflow-x: hidden;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+    position: relative;
+    min-height: 100vh;
+    max-width: 100vw;
+}
+
+html,
+body {
+    max-width: 100vw;
+    overflow-x: hidden;
+}
+
+.app {
+    min-height: 100vh;
+    overflow-x: hidden;
+    max-width: 100vw;
+    width: 100%;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.hero .container,
+.container {
+    max-width: 100%;
+    width: 100%;
+    padding-left: min(2rem, 4vw);
+    padding-right: min(2rem, 4vw);
+    box-sizing: border-box;
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 0 1rem;
+    }
+}

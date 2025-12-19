@@ -1,0 +1,129 @@
+export const portfolioData = {
+    personal: {
+        name: "Kevin Ardhana",
+        title: "Mahasiswa Sistem Informasi",
+        subtitle: "Full Stack Developer & Data Scientist",
+        email: "kevinardhana096@gmail.com",
+        phone: "+62 852-9948-9932",
+        location: "Makassar, Indonesia",
+        linkedin: "https://www.linkedin.com/in/kevin-ardhana-806a12326/",
+        github: "https://github.com/Kevinardhana096",
+        githubPages: "https://kevinardhana096.github.io/",
+        profileImage: "/9e47c32d-e2e5-4f79-88e5-1c7696baf9e6.jpg",
+        aboutProfileImage: "/android-chrome-512x512.png"
+    },
+    profile: {
+        greeting: "Halo! Saya seorang mahasiswa Sistem Informasi yang passionate dalam dunia teknologi dan pengembangan software. Saya memiliki minat khusus dalam web development, machine learning, dan user experience design.",
+        description: "Selama perjalanan akademik saya, saya telah mengembangkan berbagai proyek yang menggabungkan teori sistem informasi dengan praktik pengembangan modern. Saya selalu antusias untuk mempelajari teknologi baru dan berkontribusi dalam proyek-proyek yang memberikan dampak positif.",
+        mission: "Misi saya adalah menjadi profesional IT yang dapat menjembatani kebutuhan bisnis dengan solusi teknologi yang inovatif dan user-friendly.",
+        currentFocus: [
+            { name: "Full Stack Web Development", icon: "Globe" },
+            { name: "Machine Learning dan Deep Learning", icon: "Zap" },
+            { name: "Data Science", icon: "BarChart3" },
+            { name: "UI/UX Design", icon: "Sparkles" }
+        ]
+    },
+    expertise: [
+        { name: "Web Development", icon: "Code" },
+        { name: "Mobile App Development", icon: "Smartphone" },
+        { name: "Machine Learning & Deep Learning", icon: "Brain" },
+        { name: "Data Science", icon: "Database" },
+        { name: "UI/UX Design", icon: "Palette" }
+    ],
+    experience: [
+        {
+            title: "Lab Assistant Python",
+            company: "Universitas Hasanuddin",
+            period: "Aug 2025 - Dec 2025",
+            description: "Membantu dosen dalam pelaksanaan praktikum Python untuk mahasiswa Sistem Informasi, membuat materi praktikum, membimbing mahasiswa dalam pemrograman Python, serta melakukan penilaian tugas dan ujian praktikum.",
+            image: null
+        },
+        {
+            title: " PPK ORMAWA Start-Up Unhas 2025",
+            company: "UKM Start-Up Unhas",
+            period: "Apr 2025 - Jun 2025",
+            description: "Menyusun proposal program pemberdayaan desa wisata berbasis digital, berperan sebagai sekretaris tim: menyusun dokumen perencanaan, logbook, dan kebutuhan administrasi lainnya, dan berkoordinasi dengan pihak desa untuk penyusunan rencana kegiatan kolaboratif.",
+            image: null
+        },
+        {
+            title: "Lab Asisten OOP Java Sistem Informasi ",
+            company: "Universitas Hasanuddin",
+            period: "Jan 2025 - Jul 2025",
+            description: "Membantu dosen dalam pelaksanaan praktikum OOP Java untuk mahasiswa Sistem Informasi, membuat materi praktikum, membimbing mahasiswa dalam pemrograman berorientasi objek, serta melakukan penilaian tugas dan ujian praktikum.",
+            image: null
+        },
+        {
+            title: " UX Today Competition",
+            company: "Institut Pertanian Bogor",
+            period: "Jul 2024 - Aug 2024",
+            description: "Berpartisipasi dalam kompetisi desain UX dengan mengembangkan konsep aplikasi AgroVerify, solusi digital untuk traceability hasil panen seperti buah dan sayur dari kebun ke konsumen.",
+            image: null
+        }
+    ],
+    projects: [
+        {
+            title: "EasyCook Website",
+            tech: ["React", "Node.js", "SQLite", "Flask API", "Tailwind CSS", "DaisiesUI"],
+            description: "Membangun website Easy Cook sebagai platform berbagi dan mencari resep masakan, memungkinkan pengguna untuk mencari inspirasi resep dan mengunggah resep buatan sendiri.",
+            github: "https://github.com/Kevinardhana096/EasyCook.git"
+        },
+        {
+            title: "Melodix Application",
+            tech: ["Java", "Android", "Android Studio", "Firebase", "API"],
+            description: "Mengembangkan aplikasi Melodix, pemutar musik berbasis Android dengan fitur online streaming, offline playback, download lagu, dan daftar favorit.",
+            github: "https://github.com/Kevinardhana096/Melodix.git"
+        },
+        {
+            title: "Data Visualization Dashboard",
+            tech: ["Tableau"],
+            description: "Dashboard interaktif untuk visualisasi data penjualan dan trend analysis",
+            demo: "https://public.tableau.com/app/profile/kevin.ardhana/viz/TugasBesarVisualisasiInformasi_17498876191350/Dashboard1"
+        },
+        {
+            title: "Proyek Machine Learning Prediksi Harga Bitcoin dan Ethereum",
+            tech: ["Python", "Pandas", "Scikit-Learn", "XGBoost", "Random Forest", "Decision Tree", "Matplotlib", "Seaborn", "Jupyter Notebook", "Streamlit"],
+            description: "Mengimplementasikan dan membandingkan 3 model ML: XGBoost, Random Forest, dan Decision Tree, untuk mengukur performa prediksi dan akurasi model.",
+            github: "https://github.com/Kevinardhana096/streamlit.git",
+            demo: "https://app-unhas23.streamlit.app/"
+        },
+        {
+            title: "Proyek Website Tiket Online",
+            tech: ["Laravel", "MySQL", "Bootstrap", "HTML", "CSS", "JavaScript", "Tailwind CSS"],
+            description: "Aplikasi website untuk pemesanan tiket online dengan fitur pencarian, pemesanan, dan pembayaran.",
+            github: "https://kevinardhana096.github.io/posts/project-laravel/"
+        },
+        {
+            title: "UX Today Competition",
+            tech: ["Figma"],
+            description: "Merancang user interface dan user experience menggunakan Figma untuk mempermudah konsumen dalam melacak distribusi, kualitas, dan informasi panen.",
+            demo: "https://www.figma.com/design/ENxzipTMgn7GzuxEY2Gp5x/IT-TODAY-ROAD-IPB--Copy-?node-id=0-1&t=XiuVV7p8gtaikiF5-1"
+        }
+    ],
+    education: [
+        {
+            degree: "S1 Sistem Informasi",
+            school: "Universitas Hasanuddin",
+            period: "2023 - Sekarang",
+            gpa: "3.89/4.00"
+        },
+        {
+            degree: "SMA IPA",
+            school: "SMAN 21 Makassar",
+            period: "2020 - 2023",
+            gpa: "90.07/100"
+        }
+    ],
+    skills: {
+        programming: ["JavaScript", "Python", "PHP", "Java", "C++"],
+        dataVisualization: ["Python (Matplotlib, Seaborn)", "Tableau", "Power BI"],
+        software: ["Android Studio", "Canva", "ClickUp", "Capcut", "Cursor", "Draw.io", "Figma", "Filmora", "Git (CLI)", "GitHub", "Inkscape", "IntelliJ IDEA", "MySQL Workbench", "Notion", "OBS Studio", "Postman", "Sublime Text", "Visual Studio Code", "TensorFlow", "PyTorch", "OpenCV", "Google Colab", "Jupyter Notebook"],
+        softSkills: ["Problem Solving", "Team Work", "Leadership", "Communication", "Time Management", "Critical Thinking"]
+    }
+}
+
+export const titles = [
+    "Full Stack Developer",
+    "Data Scientist",
+    "UI/UX Designer",
+    "Machine Learning and Deep Learning"
+]

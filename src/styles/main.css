@@ -1,0 +1,7 @@
+/* Main CSS - Import semua modul */
+@import './variables.css';
+@import './navigation.css';
+@import './hero.css';
+@import './sections.css';
+@import './components.css';
+@import './responsive.css';

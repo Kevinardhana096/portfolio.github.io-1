@@ -1,147 +1,75 @@
-import { useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
-import {
-  Mail,
-  Github,
-  Linkedin,
-  ExternalLink,
-  User,
-  Code,
-  Briefcase,
-  GraduationCap,
-  Award,
-  Database,
-  Globe,
-  Server,
-  Smartphone,
-  BarChart3,
-  Brain,
-  Users,
-  MessageSquare
-} from 'lucide-react'
-import profilePlaceholder from './assets/images/profile-demo.svg'
+import { useState, useEffect, lazy, Suspense, memo, useCallback } from 'react'
+import Navigation from './components/Navigation'
+import Hero from './components/Hero'
+import Footer from './components/Footer'
+import { portfolioData, titles } from './data/portfolioData'
 import './App.css'
-import { title } from 'framer-motion/client'
+import './optimization.css'
+
+// Lazy load components untuk performa lebih baik
+const About = lazy(() => import('./components/About'))
+const Experience = lazy(() => import('./components/Experience'))
+const Projects = lazy(() => import('./components/Projects'))
+const Education = lazy(() => import('./components/Education'))
+const Skills = lazy(() => import('./components/Skills'))
+const Contact = lazy(() => import('./components/Contact'))
+
+// Loading component dengan skeleton
+const SectionLoader = () => (
+  <div style={{
+    minHeight: '400px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    color: 'var(--text-secondary)',
+    padding: '2rem'
+  }}>
+    <div className="skeleton-loader" style={{
+      width: '100%',
+      maxWidth: '1200px',
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '1rem'
+    }}>
+      <div className="skeleton-line" style={{
+        height: '40px',
+        background: 'linear-gradient(90deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.03) 100%)',
+        borderRadius: '8px',
+        animation: 'shimmer 1.5s infinite'
+      }}></div>
+      <div className="skeleton-line" style={{
+        height: '100px',
+        background: 'linear-gradient(90deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.03) 100%)',
+        borderRadius: '8px',
+        animation: 'shimmer 1.5s infinite',
+        animationDelay: '0.2s'
+      }}></div>
+    </div>
+  </div>
+)
+
+// Add shimmer keyframes
+if (typeof document !== 'undefined') {
+  const style = document.createElement('style')
+  style.textContent = `
+    @keyframes shimmer {
+      0%, 100% { opacity: 0.5; }
+      50% { opacity: 1; }
+    }
+  `
+  document.head.appendChild(style)
+}
 
 function App() {
   const [activeSection, setActiveSection] = useState('home')
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [typedText, setTypedText] = useState('')
+  const [currentTitleIndex, setCurrentTitleIndex] = useState(0)
+  const [mountedSections, setMountedSections] = useState({ about: false, experience: false, projects: false, education: false, skills: false, contact: false })
+  const [heroLoaded, setHeroLoaded] = useState(false)
 
-  // Portfolio data
-  const portfolioData = {
-    personal: {
-      name: "Kevin Ardhana",
-      title: "Mahasiswa Sistem Informasi",
-      subtitle: "Full Stack Developer & Data Scientist",
-      email: "kevinardhana096@gmail.com",
-      phone: "+62 852-9948-9932",
-      location: "Makassar, Indonesia",
-      linkedin: "https://www.linkedin.com/in/kevin-ardhana-806a12326/",
-      github: "https://github.com/Kevinardhana096",
-      githubPages: "https://kevinardhana096.github.io/",
-      profileImage: "https://avatars.githubusercontent.com/u/165297553?v=4" // Ganti dengan path foto Anda
-    },
-    profile: {
-      greeting: "Halo! Saya seorang mahasiswa Sistem Informasi yang passionate dalam dunia teknologi dan pengembangan software. Saya memiliki minat khusus dalam web development, machine learning, dan user experience design.",
-      description: "Selama perjalanan akademik saya, saya telah mengembangkan berbagai proyek yang menggabungkan teori sistem informasi dengan praktik pengembangan modern. Saya selalu antusias untuk mempelajari teknologi baru dan berkontribusi dalam proyek-proyek yang memberikan dampak positif.",
-      mission: "Misi saya adalah menjadi profesional IT yang dapat menjembatani kebutuhan bisnis dengan solusi teknologi yang inovatif dan user-friendly.",
-      currentFocus: [
-        "Full Stack Web Development",
-        "Machine Learning dan Data Science",
-        "UI/UX Design"
-      ]
-    },
-    expertise: [
-      "Web Development",
-      "Mobile App Development",
-      "Data Science & Machine Learning",
-      "UI/UX Design"
-    ],
-    experience: [
-      {
-        title: " PPK ORMAWA Start-Up Unhas 2025",
-        company: "UKM Start-Up Unhas",
-        period: "Apr 2025 - Jun 2025",
-        description: "Menyusun proposal program pemberdayaan desa wisata berbasis digital, berperan sebagai sekretaris tim: menyusun dokumen perencanaan, logbook, dan kebutuhan administrasi lainnya, dan berkoordinasi dengan pihak desa untuk penyusunan rencana kegiatan kolaboratif."
-      },
-      {
-        title: "Lab Asisten OOP Java Sistem Informasi ",
-        company: "Universitas Hasanuddin",
-        period: "Jan 2025 - Jul 2025",
-        description: "Membantu dosen dalam pelaksanaan praktikum OOP Java untuk mahasiswa Sistem Informasi, membuat materi praktikum, membimbing mahasiswa dalam pemrograman berorientasi objek, serta melakukan penilaian tugas dan ujian praktikum."
-      },
-      {
-        title: " UX Today Competition",
-        company: "Institut Pertanian Bogor",
-        period: "Jul 2024 - Aug 2024",
-        description: "Berpartisipasi dalam kompetisi desain UX dengan mengembangkan konsep aplikasi AgroVerify, solusi digital untuk traceability hasil panen seperti buah dan sayur dari kebun ke konsumen."
-      }
-    ],
-    projects: [
-      {
-        title: "EasyCook Website",
-        tech: ["React", "Node.js", "SQLite", "Flask API", "Tailwind CSS", "DaisiesUI"],
-        description: "Membangun website Easy Cook sebagai platform berbagi dan mencari resep masakan, memungkinkan pengguna untuk mencari inspirasi resep dan mengunggah resep buatan sendiri.",
-        github: "https://github.com/Kevinardhana096/EasyCook.git"
-        // demo: "https://johndoe.github.io/ecommerce-app"
-      },
-      {
-        title: "Melodix Application",
-        tech: ["Java", "Android", "Android Studio", "Firebase", "API"],
-        description: "Mengembangkan aplikasi Melodix, pemutar musik berbasis Android dengan fitur online streaming, offline playback, download lagu, dan daftar favorit.",
-        github: "https://github.com/Kevinardhana096/Melodix.git"
-      },
-      {
-        title: "Data Visualization Dashboard",
-        tech: ["Tableau"],
-        description: "Dashboard interaktif untuk visualisasi data penjualan dan trend analysis",
-        // github: "",
-        demo: "https://public.tableau.com/app/profile/kevin.ardhana/viz/TugasBesarVisualisasiInformasi_17498876191350/Dashboard1"
-      },
-      {
-        title: "Proyek Machine Learning Prediksi Harga Bitcoin dan Ethereum",
-        tech: ["Python", "Pandas", "Scikit-Learn", "XGBoost", "Random Forest", "Decision Tree", "Matplotlib", "Seaborn", "Jupyter Notebook", "Streamlit"],
-        description: "Mengimplementasikan dan membandingkan 3 model ML: XGBoost, Random Forest, dan Decision Tree, untuk mengukur performa prediksi dan akurasi model.",
-        github: "https://github.com/Kevinardhana096/streamlit.git",
-        demo: "https://app-unhas23.streamlit.app/"
-      },
-      {
-        title: "Proyek Website Tiket Online",
-        tech: ["Laravel", "MySQL", "Bootstrap", "HTML", "CSS", "JavaScript", "Tailwind CSS"],
-        description: "Aplikasi website untuk pemesanan tiket online dengan fitur pencarian, pemesanan, dan pembayaran.",
-        github: "https://kevinardhana096.github.io/posts/project-laravel/",
-        // demo: "https://johndoe.github.io/e-learning-app"
-      },
-      {
-        title: "UX Today Competition",
-        tech: ["Figma"],
-        description: "Merancang user interface dan user experience menggunakan Figma untuk mempermudah konsumen dalam melacak distribusi, kualitas, dan informasi panen.",
-        // github: "https://github.com/johndoe/e-learning-app",
-        demo: "https://www.figma.com/design/ENxzipTMgn7GzuxEY2Gp5x/IT-TODAY-ROAD-IPB--Copy-?node-id=0-1&t=XiuVV7p8gtaikiF5-1"
-      }
-    ],
-    education: [
-      {
-        degree: "S1 Sistem Informasi",
-        school: "Universitas Hasanuddin",
-        period: "2023 - Sekarang",
-        gpa: "3.87/4.00"
-      },
-      {
-        degree: "SMA IPA",
-        school: "SMAN 21 Makassar",
-        period: "2020 - 2023",
-        gpa: "90.07/100"
-      }
-    ],
-    skills: {
-      programming: ["JavaScript", "Python", "PHP", "Java","C++"],
-      dataVisualization: ["Python (Matplotlib, Seaborn)", "Tableau"],
-      software: ["Android Studio", "Canva", "ClickUp", "Capcut", "Cursor", "Draw.io", "Figma", "Filmora", "Git (CLI)", "GitHub", "Inkscape", "IntelliJ IDEA", "MySQL Workbench", "Notion", "OBS Studio", "Postman", "Sublime Text", "Visual Studio Code"],
-      softSkills: ["Problem Solving", "Team Work", "Leadership", "Communication", "Time Management", "Critical Thinking"]
-    }
-  }  // Navigation handler
-  const scrollToSection = (sectionId) => {
+  // Navigation handler with useCallback untuk prevent re-render
+  const scrollToSection = useCallback((sectionId) => {
     setActiveSection(sectionId)
     setMobileMenuOpen(false) // Close mobile menu when navigating
 
@@ -176,733 +104,156 @@ function App() {
         }
       }
     }, 100)
-  }
+  }, [])
 
-  // Scroll spy effect
+  // Defer mounting sections untuk initial load lebih cepat
   useEffect(() => {
+    // Mount About section setelah short delay (prioritas tinggi)
+    const aboutTimer = setTimeout(() => {
+      setMountedSections(prev => ({ ...prev, about: true }))
+    }, 300)
+
+    // Mount sections lainnya secara bertahap
+    const othersTimer = setTimeout(() => {
+      setMountedSections({ about: true, experience: true, projects: true, education: true, skills: true, contact: true })
+    }, 800)
+
+    return () => {
+      clearTimeout(aboutTimer)
+      clearTimeout(othersTimer)
+    }
+  }, [])
+
+  // Hero loaded callback
+  useEffect(() => {
+    const timer = setTimeout(() => setHeroLoaded(true), 500)
+    return () => clearTimeout(timer)
+  }, [])
+
+  // Scroll spy effect dengan throttling untuk performa
+  useEffect(() => {
+    let ticking = false
+
     const handleScroll = () => {
-      const sections = ['home', 'about', 'experience', 'projects', 'education', 'skills', 'contact']
-      const scrollPosition = window.scrollY + 100
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const sections = ['home', 'about', 'experience', 'projects', 'education', 'skills', 'contact']
+          const scrollPosition = window.scrollY + 100
 
-      // Add navbar scroll effect
-      const navbar = document.querySelector('.navbar')
-      if (window.scrollY > 50) {
-        navbar.classList.add('scrolled')
-      } else {
-        navbar.classList.remove('scrolled')
-      }
-
-      for (const section of sections) {
-        const element = document.getElementById(section)
-        if (element) {
-          const { offsetTop, offsetHeight } = element
-          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
-            setActiveSection(section)
-            break
+          // Add navbar scroll effect
+          const navbar = document.querySelector('.navbar')
+          if (navbar) {
+            if (window.scrollY > 50) {
+              navbar.classList.add('scrolled')
+            } else {
+              navbar.classList.remove('scrolled')
+            }
           }
-        }
+
+          for (const section of sections) {
+            const element = document.getElementById(section)
+            if (element) {
+              const { offsetTop, offsetHeight } = element
+              if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
+                setActiveSection(section)
+                break
+              }
+            }
+          }
+          ticking = false
+        })
+        ticking = true
       }
     }
 
-    window.addEventListener('scroll', handleScroll)
+    window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  // Typing animation effect
+  useEffect(() => {
+    const currentTitle = titles[currentTitleIndex]
+    let charIndex = 0
+    let isDeleting = false
+
+    const typeInterval = setInterval(() => {
+      if (!isDeleting) {
+        if (charIndex < currentTitle.length) {
+          setTypedText(currentTitle.substring(0, charIndex + 1))
+          charIndex++
+        } else {
+          setTimeout(() => {
+            isDeleting = true
+          }, 2000)
+        }
+      } else {
+        if (charIndex > 0) {
+          setTypedText(currentTitle.substring(0, charIndex - 1))
+          charIndex--
+        } else {
+          isDeleting = false
+          setCurrentTitleIndex((prev) => (prev + 1) % titles.length)
+        }
+      }
+    }, 100)
+
+    return () => clearInterval(typeInterval)
+  }, [currentTitleIndex])
+
   return (
     <div className="app">
-      {/* Navigation */}
-      <nav className="navbar">
-        <div className="nav-container">
-          <div className="nav-logo">
-            <div className="logo-container">
-              <Code className="logo-icon" />
-              <div className="logo-text">
-                <span className="logo-name">{portfolioData.personal.name}</span>
-                <span className="logo-subtitle">Portfolio</span>
-              </div>
-            </div>
-          </div>
-          <ul className={`nav-menu ${mobileMenuOpen ? 'nav-menu-open' : ''}`}>
-            {['Home', 'About', 'Experience', 'Projects', 'Education', 'Skills', 'Contact'].map((item) => (
-              <li key={item}>
-                <a
-                  href={`#${item.toLowerCase()}`}
-                  className={activeSection === item.toLowerCase() ? 'active' : ''}
-                  onClick={(e) => {
-                    e.preventDefault()
-                    scrollToSection(item.toLowerCase())
-                  }}
-                >
-                  {item}
-                </a>
-              </li>
-            ))}
-          </ul>
-          <div
-            className={`nav-mobile-toggle ${mobileMenuOpen ? 'active' : ''}`}
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          >
-            <span></span>
-            <span></span>
-            <span></span>
-          </div>
-        </div>
-      </nav>
+      <Navigation
+        activeSection={activeSection}
+        scrollToSection={scrollToSection}
+        mobileMenuOpen={mobileMenuOpen}
+        setMobileMenuOpen={setMobileMenuOpen}
+        portfolioData={portfolioData}
+      />
 
-      {/* Hero Section */}
-      <section id="home" className="hero">
-        <div className="hero-background">
-          <div className="hero-grid"></div>
-          <div className="hero-particles">
-            {[...Array(20)].map((_, i) => (
-              <div key={i} className={`particle particle-${i + 1}`}></div>
-            ))}
-          </div>
-        </div>
-        <div className="container">
-          <motion.div
-            className="hero-content"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            {/* Profile Introduction Card */}
-            <motion.div
-              className="hero-profile-card"
-              initial={{ opacity: 0, x: -50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 1.0, delay: 0.3 }}
-            >
-              <div className="profile-image-hero">
-                <div className="profile-frame">
-                  <img
-                    src={portfolioData.personal.profileImage}
-                    alt={`${portfolioData.personal.name} - Profile Photo`}
-                    className="profile-img"
-                    onError={(e) => {
-                      console.log('Image failed to load:', e.target.src)
-                      e.target.style.display = 'block'
-                    }}
-                  />
-                  <div className="profile-overlay">
-                    <div className="overlay-icon">
-                      <Code size={24} />
-                    </div>
-                  </div>
-                </div>
-                <div className="floating-tech-icons">
-                  <div className="tech-icon tech-icon-1"><Code size={18} /></div>
-                  <div className="tech-icon tech-icon-2"><Database size={16} /></div>
-                  <div className="tech-icon tech-icon-3"><Globe size={14} /></div>
-                  <div className="tech-icon tech-icon-4"><Server size={20} /></div>
-                </div>
-              </div>
+      <Hero
+        scrollToSection={scrollToSection}
+        typedText={typedText}
+        portfolioData={portfolioData}
+        onLoad={() => setHeroLoaded(true)}
+      />
 
-              <div className="profile-info">
-                <motion.div
-                  className="profile-badge"
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.6, delay: 0.5 }}
-                >
-                  <span className="badge-icon">🎓</span>
-                  <span>{portfolioData.personal.title}</span>
-                </motion.div>
+      {mountedSections.about && (
+        <Suspense fallback={<SectionLoader />}>
+          <About portfolioData={portfolioData} />
+        </Suspense>
+      )}
 
-                <motion.h1
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: 0.7 }}
-                >
-                  <span className="greeting">Halo, Saya</span>
-                  <span className="name-highlight">{portfolioData.personal.name}</span>
-                </motion.h1>
+      {mountedSections.experience && (
+        <Suspense fallback={<SectionLoader />}>
+          <Experience portfolioData={portfolioData} />
+        </Suspense>
+      )}
 
-                <motion.h2
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: 0.9 }}
-                  className="subtitle"
-                >
-                  {portfolioData.personal.subtitle}
-                </motion.h2>
+      {mountedSections.projects && (
+        <Suspense fallback={<SectionLoader />}>
+          <Projects portfolioData={portfolioData} />
+        </Suspense>
+      )}
 
-                <motion.p
-                  className="profile-intro"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: 1.1 }}
-                >
-                  {portfolioData.profile.greeting}
-                </motion.p>
+      {mountedSections.education && (
+        <Suspense fallback={<SectionLoader />}>
+          <Education portfolioData={portfolioData} />
+        </Suspense>
+      )}
 
-                <motion.div
-                  className="profile-contact-info"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: 1.3 }}
-                >
-                  <div className="contact-item">
-                    <Mail size={16} />
-                    <span>{portfolioData.personal.email}</span>
-                  </div>
-                  <div className="contact-item">
-                    <span>📍</span>
-                    <span>{portfolioData.personal.location}</span>
-                  </div>
-                </motion.div>
-              </div>
-            </motion.div>
+      {mountedSections.skills && (
+        <Suspense fallback={<SectionLoader />}>
+          <Skills portfolioData={portfolioData} />
+        </Suspense>
+      )}
 
-            {/* Call to Action Section */}
-            <motion.div
-              className="hero-cta-section"
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 1.0, delay: 0.6 }}
-            >
-              <div className="cta-content">
-                <h3>Mari Berkolaborasi!</h3>
-                <p>Saya terbuka untuk kesempatan magang, proyek kolaborasi, atau diskusi tentang teknologi dan inovasi.</p>
+      {mountedSections.contact && (
+        <Suspense fallback={<SectionLoader />}>
+          <Contact portfolioData={portfolioData} />
+        </Suspense>
+      )}
 
-                <div className="hero-buttons">
-                  <button
-                    className="btn-primary"
-                    onClick={() => scrollToSection('contact')}
-                  >
-                    <Mail size={20} />
-                    <span>Hubungi Saya</span>
-                  </button>
-                  <button
-                    className="btn-secondary"
-                    onClick={() => scrollToSection('projects')}
-                  >
-                    <ExternalLink size={20} />
-                    <span>Lihat Portfolio</span>
-                  </button>
-                </div>
-
-                <div className="hero-stats">
-                  <div className="stat-card">
-                    <span className="stat-number">6+</span>
-                    <span className="stat-label">Projects</span>
-                  </div>
-                  <div className="stat-card">
-                    <span className="stat-number">3+</span>
-                    <span className="stat-label">Experience</span>
-                  </div>
-                  <div className="stat-card">
-                    <span className="stat-number">3.87</span>
-                    <span className="stat-label">GPA</span>
-                  </div>
-                </div>
-
-                <div className="social-connect">
-                  <h4>Connect with me</h4>
-                  <div className="social-links">
-                    <a href={portfolioData.personal.github} target="_blank" rel="noopener noreferrer" className="social-link">
-                      <Github size={20} />
-                      <span>GitHub</span>
-                    </a>
-                    <a href={portfolioData.personal.linkedin} target="_blank" rel="noopener noreferrer" className="social-link">
-                      <Linkedin size={20} />
-                      <span>LinkedIn</span>
-                    </a>
-                    <a href={portfolioData.personal.githubPages} target="_blank" rel="noopener noreferrer" className="social-link">
-                      <Globe size={20} />
-                      <span>Website</span>
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* About Section */}
-      <section id="about" className="about">
-        <div className="container">
-          <motion.div
-            className="section-header"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-          >
-            <User className="section-icon" />
-            <h2>About Me</h2>
-            <p>Get to know more about my background, journey, and expertise in technology</p>
-          </motion.div>
-
-          <div className="about-main-content">
-            {/* Profile Overview Card */}
-            <motion.div
-              className="about-profile-card"
-              initial={{ opacity: 0, x: -50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              viewport={{ once: true }}
-            >
-              <div className="about-image-section">
-                <div className="about-profile-frame">
-                  <img
-                    src={portfolioData.personal.profileImage}
-                    alt={`${portfolioData.personal.name} - Professional Photo`}
-                    className="about-profile-img"
-                    onError={(e) => {
-                      console.log('About image failed to load:', e.target.src)
-                      e.target.style.display = 'block'
-                    }}
-                  />
-                  <div className="about-profile-overlay">
-                    <div className="about-status-indicator">
-                      <div className="status-dot"></div>
-                      <span>Available for opportunities</span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Floating Badges */}
-                <div className="about-floating-badges">
-                  <div className="badge-item badge-1">
-                    <GraduationCap size={16} />
-                    <span>Student</span>
-                  </div>
-                  <div className="badge-item badge-2">
-                    <Code size={16} />
-                    <span>Developer</span>
-                  </div>
-                  <div className="badge-item badge-3">
-                    <BarChart3 size={16} />
-                    <span>Analyst</span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="about-personal-info">
-                <h3 className="about-name">{portfolioData.personal.name}</h3>
-                <p className="about-title">{portfolioData.personal.subtitle}</p>
-
-                <div className="about-quick-info">
-                  <div className="info-item">
-                    <Mail size={16} />
-                    <span>{portfolioData.personal.email}</span>
-                  </div>
-                  <div className="info-item">
-                    <span>📍</span>
-                    <span>{portfolioData.personal.location}</span>
-                  </div>
-                  <div className="info-item">
-                    <GraduationCap size={16} />
-                    <span>{portfolioData.personal.title}</span>
-                  </div>
-                </div>
-
-                <div className="about-social-links">
-                  <a href={portfolioData.personal.github} target="_blank" rel="noopener noreferrer" className="social-btn">
-                    <Github size={18} />
-                  </a>
-                  <a href={portfolioData.personal.linkedin} target="_blank" rel="noopener noreferrer" className="social-btn">
-                    <Linkedin size={18} />
-                  </a>
-                  <a href={portfolioData.personal.githubPages} target="_blank" rel="noopener noreferrer" className="social-btn">
-                    <Globe size={18} />
-                  </a>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* About Story & Mission */}
-            <motion.div
-              className="about-story-section"
-              initial={{ opacity: 0, x: 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-              viewport={{ once: true }}
-            >
-              <div className="story-content">
-                <div className="story-header">
-                  <h3>My Story</h3>
-                  <div className="story-divider"></div>
-                </div>
-
-                <div className="story-paragraphs">
-                  <p className="story-intro">{portfolioData.profile.description}</p>
-
-                  <div className="mission-box">
-                    <h4>
-                      <Brain size={20} />
-                      My Mission
-                    </h4>
-                    <p>{portfolioData.profile.mission}</p>
-                  </div>
-                </div>
-
-                <div className="current-focus">
-                  <h4>
-                    <Users size={20} />
-                    Current Focus Areas
-                  </h4>
-                  <div className="focus-grid">
-                    {portfolioData.profile.currentFocus.map((focus, index) => (
-                      <div key={index} className="focus-item">
-                        <div className="focus-icon">
-                          {index === 0 && <Globe size={16} />}
-                          {index === 1 && <BarChart3 size={16} />}
-                          {index === 2 && <Users size={16} />}
-                          {index === 3 && <Database size={16} />}
-                        </div>
-                        <span>{focus}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-
-          {/* Expertise Section */}
-          <motion.div
-            className="about-expertise-section"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.6 }}
-            viewport={{ once: true }}
-          >
-            <div className="expertise-header">
-              <h3>
-                <Award size={24} />
-                Areas of Expertise
-              </h3>
-              <p>Technologies and domains I'm passionate about</p>
-            </div>
-
-            <div className="expertise-showcase">
-              {portfolioData.expertise.map((skill, index) => (
-                <motion.div
-                  key={index}
-                  className="expertise-card"
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.4, delay: 0.8 + (index * 0.1) }}
-                  viewport={{ once: true }}
-                  whileHover={{ y: -5, transition: { duration: 0.2 } }}
-                >
-                  <div className="expertise-icon">
-                    {skill.includes('Web') && <Globe size={20} />}
-                    {skill.includes('Mobile') && <Smartphone size={20} />}
-                    {skill.includes('Data') && <BarChart3 size={20} />}
-                    {skill.includes('Database') && <Database size={20} />}
-                    {skill.includes('System') && <Server size={20} />}
-                    {skill.includes('UI/UX') && <Users size={20} />}
-                  </div>
-                  <span>{skill}</span>
-                  <div className="expertise-level">
-                    <div className="level-bar">
-                      <div className="level-fill" style={{ width: `${85 + (index * 2)}%` }}></div>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Experience Section */}
-      <section id="experience" className="experience">
-        <div className="container">
-          <motion.div
-            className="section-header"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-          >
-            <Briefcase className="section-icon" />
-            <h2>Experience</h2>
-            <p>My professional journey and internships</p>
-          </motion.div>
-
-          <div className="experience-timeline">
-            {portfolioData.experience.map((exp, index) => (
-              <motion.div
-                key={index}
-                className="timeline-item"
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.2 }}
-                viewport={{ once: true }}
-              >
-                <div className="timeline-marker"></div>
-                <div className="timeline-content">
-                  <h3>{exp.title}</h3>
-                  <h4>{exp.company}</h4>
-                  <span className="timeline-period">{exp.period}</span>
-                  <p>{exp.description}</p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Projects Section */}
-      <section id="projects" className="projects">
-        <div className="container">
-          <motion.div
-            className="section-header"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-          >
-            <Code className="section-icon" />
-            <h2>Projects</h2>
-            <p>Some of my recent work and personal projects</p>
-          </motion.div>
-
-          <div className="projects-grid">
-            {portfolioData.projects.map((project, index) => (
-              <motion.div
-                key={index}
-                className="project-card"
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.2 }}
-                viewport={{ once: true }}
-                whileHover={{ y: -5 }}
-              >
-                <div className="project-header">
-                  <h3>{project.title}</h3>
-                  <div className="project-links">
-                    <a href={project.github} target="_blank" rel="noopener noreferrer">
-                      <Github size={20} />
-                    </a>
-                    {project.demo && (
-                      <a href={project.demo} target="_blank" rel="noopener noreferrer">
-                        <ExternalLink size={20} />
-                      </a>
-                    )}
-                  </div>
-                </div>
-                <p>{project.description}</p>
-                <div className="project-tech">
-                  {project.tech.map((tech, techIndex) => (
-                    <span key={techIndex} className="tech-tag">{tech}</span>
-                  ))}
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Education Section */}
-      <section id="education" className="education">
-        <div className="container">
-          <motion.div
-            className="section-header"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-          >
-            <GraduationCap className="section-icon" />
-            <h2>Education</h2>
-            <p>My academic background and achievements</p>
-          </motion.div>
-
-          <div className="education-timeline">
-            {portfolioData.education.map((edu, index) => (
-              <motion.div
-                key={index}
-                className="timeline-item"
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.2 }}
-                viewport={{ once: true }}
-              >
-                <div className="timeline-marker"></div>
-                <div className="timeline-content">
-                  <h3>{edu.degree}</h3>
-                  <h4>{edu.school}</h4>
-                  <span className="timeline-period">{edu.period}</span>
-                  <div className="gpa">GPA: {edu.gpa}</div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Skills Section */}
-      <section id="skills" className="skills">
-        <div className="container">
-          <motion.div
-            className="section-header"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-          >
-            <Award className="section-icon" />
-            <h2>Skills & Technologies</h2>
-            <p>My technical and soft skills across different areas</p>
-          </motion.div>
-
-          <div className="skills-grid">
-            <motion.div
-              className="skill-category"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              viewport={{ once: true }}
-            >
-              <div className="skill-header">
-                <Code className="skill-icon" />
-                <h3>Programming Languages</h3>
-              </div>
-              <div className="skill-tags">
-                {portfolioData.skills.programming.map((skill, index) => (
-                  <span key={index} className="skill-tag">{skill}</span>
-                ))}
-              </div>
-            </motion.div>
-
-            <motion.div
-              className="skill-category"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              viewport={{ once: true }}
-            >
-              <div className="skill-header">
-                <BarChart3 className="skill-icon" />
-                <h3>Data Visualization</h3>
-              </div>
-              <div className="skill-tags">
-                {portfolioData.skills.dataVisualization.map((skill, index) => (
-                  <span key={index} className="skill-tag">{skill}</span>
-                ))}
-              </div>
-            </motion.div>
-
-            <motion.div
-              className="skill-category"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              viewport={{ once: true }}
-            >
-              <div className="skill-header">
-                <Server className="skill-icon" />
-                <h3>Software & Tools</h3>
-              </div>
-              <div className="skill-tags">
-                {portfolioData.skills.software.map((skill, index) => (
-                  <span key={index} className="skill-tag">{skill}</span>
-                ))}
-              </div>
-            </motion.div>
-
-            <motion.div
-              className="skill-category"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              viewport={{ once: true }}
-            >
-              <div className="skill-header">
-                <Brain className="skill-icon" />
-                <h3>Soft Skills</h3>
-              </div>
-              <div className="skill-tags">
-                {portfolioData.skills.softSkills.map((skill, index) => (
-                  <span key={index} className="skill-tag">{skill}</span>
-                ))}
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* Contact Section */}
-      <section id="contact" className="contact">
-        <div className="container">
-          <motion.div
-            className="section-header"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-          >
-            <MessageSquare className="section-icon" />
-            <h2>Get In Touch</h2>
-            <p>Let's connect and discuss opportunities</p>
-          </motion.div>
-
-          <motion.div
-            className="contact-content"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            viewport={{ once: true }}
-          >
-            <div className="contact-info">
-              <h3>Let's work together</h3>
-              <p>I'm always open to discussing new opportunities, collaborations, or just having a chat about technology.</p>
-
-              <div className="contact-methods">
-                <a href={`mailto:${portfolioData.personal.email}`} className="contact-method">
-                  <Mail className="contact-icon" />
-                  <div>
-                    <h4>Email</h4>
-                    <span>{portfolioData.personal.email}</span>
-                  </div>
-                </a>
-
-                <a href={portfolioData.personal.linkedin} target="_blank" rel="noopener noreferrer" className="contact-method">
-                  <Linkedin className="contact-icon" />
-                  <div>
-                    <h4>LinkedIn</h4>
-                    <span>Connect with me</span>
-                  </div>
-                </a>
-
-                <a href={portfolioData.personal.github} target="_blank" rel="noopener noreferrer" className="contact-method">
-                  <Github className="contact-icon" />
-                  <div>
-                    <h4>GitHub</h4>
-                    <span>Check out my code</span>
-                  </div>
-                </a>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="footer">
-        <div className="container">
-          <div className="footer-content">
-            <p>&copy; 2025 {portfolioData.personal.name}. All rights reserved.</p>
-            <div className="footer-links">
-              <a href={portfolioData.personal.github} target="_blank" rel="noopener noreferrer">
-                <Github size={20} />
-              </a>
-              <a href={portfolioData.personal.linkedin} target="_blank" rel="noopener noreferrer">
-                <Linkedin size={20} />
-              </a>
-              <a href={portfolioData.personal.githubPages} target="_blank" rel="noopener noreferrer">
-                <Globe size={20} />
-              </a>
-            </div>
-          </div>
-        </div>
-      </footer>
+      <Footer portfolioData={portfolioData} />
     </div>
   )
 }

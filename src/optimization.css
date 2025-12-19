@@ -1,0 +1,244 @@
+/* ===== CRITICAL CSS - INITIAL LOAD OPTIMIZATION ===== */
+
+/* Prioritize above-the-fold content */
+.hero {
+    content-visibility: visible !important;
+}
+
+/* Defer below-the-fold content */
+.about-section,
+.experience-section,
+.projects-section,
+.education-section,
+.skills-section,
+.contact-section {
+    content-visibility: auto;
+    contain-intrinsic-size: 0 800px;
+}
+
+/* Reduce paint complexity */
+/* body {
+    contain: layout style paint;
+} */
+
+/* ===== LOADING ANIMATION ===== */
+
+/* Loading Animation */
+.loader {
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    color: var(--primary-color);
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+}
+
+/* Global Performance Optimizations */
+* {
+    /* Hardware acceleration untuk semua elemen */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Disable animations untuk low-end devices */
+@media (max-width: 1024px) {
+    * {
+        animation-duration: 0.2s !important;
+        transition-duration: 0.2s !important;
+    }
+}
+
+/* Optimasi untuk mobile */
+@media (max-width: 768px) {
+
+    /* Reduce animation complexity */
+    * {
+        animation-duration: 0.15s !important;
+        transition-duration: 0.15s !important;
+    }
+
+    /* Simplify shadows */
+    .project-card,
+    .skill-category,
+    .timeline-item,
+    .expertise-card {
+        box-shadow: var(--shadow-small) !important;
+    }
+
+    /* Disable heavy animations */
+    .hero-particles {
+        display: none !important;
+    }
+
+    .floating-tech-icons {
+        animation: none !important;
+    }
+
+    .about-floating-badges {
+        animation: none !important;
+    }
+
+    .hero-grid {
+        opacity: 0.2 !important;
+        background-size: 100px 100px !important;
+    }
+
+    /* Optimize images */
+    img {
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: crisp-edges;
+    }
+
+    /* Reduce backdrop blur */
+    .navbar,
+    .about-profile-card,
+    .project-card {
+        backdrop-filter: blur(3px) !important;
+        -webkit-backdrop-filter: blur(3px) !important;
+    }
+
+    /* Disable hover effects */
+    .project-card:hover,
+    .expertise-card:hover,
+    .skill-tag:hover {
+        transform: none !important;
+    }
+}
+
+/* Reduce motion for accessibility and performance */
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+
+    .hero-particles,
+    .floating-tech-icons,
+    .about-floating-badges {
+        animation: none !important;
+        display: none !important;
+    }
+}
+
+/* Performance optimizations */
+.hero,
+.about,
+.experience,
+.projects,
+.education,
+.skills,
+.contact {
+    contain: layout style paint;
+    content-visibility: auto;
+    /* Render only visible sections */
+    contain-intrinsic-size: auto 500px;
+}
+
+/* GPU acceleration for animations */
+.profile-frame,
+.project-card,
+.skill-category,
+.expertise-card,
+.timeline-item {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+    will-change: auto;
+    /* Only use will-change when animating */
+}
+
+/* Remove will-change after animation */
+.profile-frame:not(:hover),
+.project-card:not(:hover),
+.skill-category:not(:hover),
+.expertise-card:not(:hover) {
+    will-change: auto;
+}
+
+
+.about-main-content {
+    contain: layout;
+}
+
+/* Optimize scroll performance */
+.app {
+    overflow-y: auto;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+}
+
+/* Simplify grid for better performance */
+@media (max-width: 768px) {
+
+    .projects-grid,
+    .skills-grid {
+        grid-template-columns: 1fr !important;
+        gap: 1rem !important;
+    }
+
+    .expertise-showcase {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 0.75rem !important;
+    }
+}
+
+/* Disable complex transforms on scroll */
+@media (max-width: 1024px) {
+    .navbar {
+        transition: background-color 0.2s ease !important;
+    }
+
+    .navbar.scrolled {
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    }
+}
+
+/* Optimize particle animations */
+@media (min-width: 769px) and (max-width: 1280px) {
+    .hero-particles .particle {
+        animation-duration: 20s !important;
+        /* Slower = less CPU */
+    }
+}
+
+/* Battery saving mode detection */
+@media (prefers-reduced-motion: reduce),
+(prefers-contrast: high),
+(max-width: 768px) and (max-height: 700px) {
+
+    /* Ultra-light mode for low battery/performance */
+    .hero-grid,
+    .hero-particles,
+    .floating-tech-icons,
+    .about-floating-badges {
+        display: none !important;
+    }
+
+    * {
+        animation: none !important;
+        transition: none !important;
+    }
+
+    .navbar,
+    .project-card,
+    .about-profile-card {
+        backdrop-filter: none !important;
+        background: var(--bg-secondary) !important;
+    }
+}

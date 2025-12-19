@@ -1,0 +1,65 @@
+/* Responsive Styles & Media Queries */
+
+/* Tablet */
+@media (max-width: 1024px) {
+    .section-header h2 {
+        font-size: 2rem;
+    }
+
+    .hero {
+        padding-top: 2rem;
+    }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .container {
+        padding: 0 1.5rem;
+    }
+
+    .section-header h2 {
+        font-size: 1.75rem;
+    }
+
+    .section-header {
+        margin-bottom: 2.5rem;
+    }
+
+    .hero {
+        min-height: auto;
+        padding: 2rem 0 3rem;
+    }
+
+    .btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+/* Small Mobile */
+@media (max-width: 480px) {
+    .container {
+        padding: 0 1rem;
+    }
+
+    .section-header h2 {
+        font-size: 1.5rem;
+    }
+
+    .card {
+        padding: 1.5rem;
+    }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation: none !important;
+        transition: none !important;
+    }
+}
+
+/* Dark Mode Support (future) */
+@media (prefers-color-scheme: light) {
+    /* Light mode variables can be added here */
+}
