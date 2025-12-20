@@ -32,7 +32,7 @@ function Experience({ portfolioData }) {
                                 {exp.image && (
                                     <div className="experience-image-wrapper">
                                         <img
-                                            src={exp.image}
+                                            src={exp.image.startsWith('http') ? exp.image : `${import.meta.env.BASE_URL}${exp.image.replace(/^\//, '')}`}
                                             alt={exp.company}
                                             className="experience-image"
                                             loading="lazy"

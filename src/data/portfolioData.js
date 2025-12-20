@@ -39,11 +39,18 @@ export const portfolioData = {
             image: null
         },
         {
-            title: " PPK ORMAWA Start-Up Unhas 2025",
+            title: " PPK ORMAWA Internal Start-Up Unhas 2025",
             company: "UKM Start-Up Unhas",
-            period: "Apr 2025 - Jun 2025",
+            period: "Jun 2025 - Des 2025",
             description: "Menyusun proposal program pemberdayaan desa wisata berbasis digital, berperan sebagai sekretaris tim: menyusun dokumen perencanaan, logbook, dan kebutuhan administrasi lainnya, dan berkoordinasi dengan pihak desa untuk penyusunan rencana kegiatan kolaboratif.",
-            image: null
+            image: "/ppko.jpeg"
+        },
+        {
+            title: "Bootcamp DQLab: Machine Learning dan Data Science with Python",
+            company: "DQLab x Digitalent Scholarship",
+            period: "17 Jul 2025 - 17 Aug 2025",
+            description: "Mengikuti bootcamp intensif selama 1 bulan yang mencakup pembelajaran teori dan praktik dalam data science, termasuk pengolahan data, analisis statistik, visualisasi data, dan penerapan machine learning menggunakan Python.",
+            image: "/pelatihan.png"
         },
         {
             title: "Lab Asisten OOP Java Sistem Informasi ",
@@ -57,6 +64,13 @@ export const portfolioData = {
             company: "Institut Pertanian Bogor",
             period: "Jul 2024 - Aug 2024",
             description: "Berpartisipasi dalam kompetisi desain UX dengan mengembangkan konsep aplikasi AgroVerify, solusi digital untuk traceability hasil panen seperti buah dan sayur dari kebun ke konsumen.",
+            image: null
+        },
+        {
+            title: "Coordinator Documentation INAUGURATION KM FMIPA UNHAS 2023",
+            company: "KM FMIPA UNHAS",
+            period: "Feb 2024 - Jun 2024",
+            description: "Mengelola tim dokumentasi selama rangkaian acara Inauguration KM FMIPA UNHAS 2023, bertanggung jawab atas pengambilan foto dan video, serta pengarsipan materi dokumentasi untuk keperluan publikasi dan laporan kegiatan.",
             image: null
         }
     ],
