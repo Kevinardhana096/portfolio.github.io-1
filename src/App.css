@@ -3614,3 +3614,60 @@ section:nth-child(even)::before {
     font-size: clamp(1.25rem, 5.5vw, 1.6rem);
   }
 }
+
+/* Mobile Animation Adjustments */
+@media (max-width: 768px) {
+
+  /* Slow down particle animation */
+  .particle {
+    animation-duration: 30s !important;
+  }
+
+  .particle:nth-child(odd) {
+    animation-duration: 40s !important;
+  }
+
+  .particle:nth-child(3n) {
+    animation-duration: 36s !important;
+  }
+
+  /* Slow down floating tech icons */
+  .tech-icon {
+    animation-duration: 6s !important;
+  }
+
+  /* Slow down any other float animations */
+  .floating-tech-icons .tech-icon {
+    animation-duration: 8s !important;
+  }
+
+  /* Slow down gradient animations */
+  .typing-text,
+  .stat-number,
+  .section-header h2 {
+    animation-duration: 6s !important;
+  }
+
+  /* Slow down profile rainbow */
+  .profile-frame {
+    animation-duration: 10s !important;
+  }
+
+  /* Slow down pulse effects */
+  .status-dot,
+  .timeline-marker {
+    animation-duration: 4s !important;
+  }
+
+  /* Slow down icon float */
+  .section-icon,
+  .floating-icon,
+  .badge-item {
+    animation-duration: 6s !important;
+  }
+
+  /* Slow down button animation */
+  .btn-primary {
+    animation-duration: 6s !important;
+  }
+}
