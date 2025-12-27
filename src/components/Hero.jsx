@@ -214,7 +214,7 @@ function Hero({ scrollToSection, typedText, portfolioData, onLoad }) {
                                     <span className="stat-label">Experience</span>
                                 </div>
                                 <div className="stat-card">
-                                    <span className="stat-number">3.89</span>
+                                    <span className="stat-number">3.90</span>
                                     <span className="stat-label">GPA</span>
                                 </div>
                             </div>

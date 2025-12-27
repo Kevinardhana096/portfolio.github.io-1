@@ -118,7 +118,7 @@ export const portfolioData = {
             degree: "S1 Sistem Informasi",
             school: "Universitas Hasanuddin",
             period: "2023 - Sekarang",
-            gpa: "3.89/4.00"
+            gpa: "3.90/4.00"
         },
         {
             degree: "SMA IPA",
