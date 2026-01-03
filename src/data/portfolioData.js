@@ -3,7 +3,7 @@ export const portfolioData = {
         name: "Kevin Ardhana",
         title: "Mahasiswa Sistem Informasi",
         subtitle: "Full Stack Developer & Data Scientist",
-        email: "kevinardhana096@gmail.com",
+        email: "ardhanak23h@student.unhas.ac.id",
         phone: "+62 852-9948-9932",
         location: "Makassar, Indonesia",
         linkedin: "https://www.linkedin.com/in/kevin-ardhana-806a12326/",
@@ -75,6 +75,24 @@ export const portfolioData = {
         }
     ],
     projects: [
+        {
+            title: "WISCONSIN CANCER CLASSIFICATION Machine Learning Project - Python",
+            tech: ["Machine Learning", "SVM", "Random Forest", "Logistic Regression", "Python", "Comparative Analysis"],
+            description: "Mengembangkan model klasifikasi machine learning untuk diagnosa kanker menggunakan Wisconsin dataset dengan akurasi >95%. Menerapkan multiple algorithms (SVM, Random Forest, Logistic Regression) dan melakukan comparative analysis.",
+            github: "https://github.com/Kevinardhana096/wisconsin_ML.git"
+        },
+        {
+            title: "MULTIMODAL HOAX DETECTION MENGGUNAKAN BLIP-2 (INDONESIA) AI / Deep Learning - Python",
+            tech: ["BLIP-2", "Multimodal", "Transfer Learning", "Python", "Deep Learning", "IDNHoaxCorpus"],
+            description: "Mengembangkan sistem deteksi hoax berbasis multimodal (teks & gambar) menggunakan BLIP-2 dengan transfer learning pada dataset IDNHoaxCorpus.",
+            github: "https://github.com/Kevinardhana096/Multimodel-Hoax-Detection-menggunakan-BLIP-2-Indonesia-.git"
+        },
+        {
+            title: "REAL-TIME PPE DETECTION MENGGUNAKAN YOLOV11 Computer Vision",
+            tech: ["YOLOv11", "Computer Vision", "GPU-accelerated", "Object Detection"],
+            description: "Mengembangkan sistem deteksi APD konstruksi berbasis computer vision (YOLOv11) dengan performa real-time (mAP@50: 57.47%, GPU-accelerated).",
+            github: "https://github.com/Kevinardhana096/REAL-TIME-PPE-DETECTION-MENGGUNAKAN-YOLOV11.git"
+        },
         {
             title: "CBT MATICS: Online Mathematics Exam Platform Web Development",
             tech: ["Go (Golang)", "React.js", "WebSocket", "Firestore", "RBAC", "Anti-cheat System"],
