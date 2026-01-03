@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { MessageSquare, Mail, Linkedin, Github } from 'lucide-react'
+import { MessageSquare, Mail, Linkedin, Github, Phone } from 'lucide-react'
 
 function Contact({ portfolioData }) {
     return (
@@ -34,6 +34,14 @@ function Contact({ portfolioData }) {
                                 <div>
                                     <h4>Email</h4>
                                     <span>{portfolioData.personal.email}</span>
+                                </div>
+                            </a>
+
+                            <a href={`tel:${portfolioData.personal.phone}`} className="contact-method">
+                                <Phone className="contact-icon" />
+                                <div>
+                                    <h4>Phone</h4>
+                                    <span>{portfolioData.personal.phone}</span>
                                 </div>
                             </a>
 

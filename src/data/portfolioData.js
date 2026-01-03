@@ -36,7 +36,7 @@ export const portfolioData = {
             company: "Universitas Hasanuddin",
             period: "Aug 2025 - Dec 2025",
             description: "Membantu dosen dalam pelaksanaan praktikum Python untuk mahasiswa Sistem Informasi, membuat materi praktikum, membimbing mahasiswa dalam pemrograman Python, serta melakukan penilaian tugas dan ujian praktikum.",
-            image: null
+            image: "/sertifikat_asistn_python.jpg"
         },
         {
             title: " PPK ORMAWA Internal Start-Up Unhas 2025",
@@ -75,6 +75,27 @@ export const portfolioData = {
         }
     ],
     projects: [
+        {
+            title: "CBT MATICS: Online Mathematics Exam Platform Web Development",
+            tech: ["Go (Golang)", "React.js", "WebSocket", "Firestore", "RBAC", "Anti-cheat System"],
+            description: "Mengembangkan Computer-Based Test (CBT) platform menggunakan Go (Golang) dan React.js, mencakup exam management system, MCQ & essay scoring, real-time monitoring dengan WebSocket, anti-cheat system, role-based authentication (RBAC), Firestore database, serta leaderboard algorithm dengan tiebreaker logic.",
+            github: "https://github.com/abijaksana96/cbt-matics",
+            demo: "https://cbt.matics.space/login"
+        },
+        {
+            title: "Matics - Sistem Pendaftaran Kompetisi Web Development",
+            tech: ["React 19", "Vite", "Supabase", "PostgreSQL", "WhatsApp Integration"],
+            description: "Mengembangkan platform pendaftaran MATICS 2025 menggunakan React 19 + Vite dan Supabase (PostgreSQL), mencakup registrasi olimpiade dan karya tulis, validasi dokumen, integrasi WhatsApp, sistem upload terstruktur, serta desain responsif untuk mobile dan desktop.",
+            github: "https://github.com/Kevinardhana096/webmatics",
+            demo: "https://www.matics.space/"
+        },
+        {
+            title: "Web Portal Akademik HIMATIKA UNHAS Web Development",
+            tech: ["React", "Supabase", "RLS", "Real-time Notifications", "Workflow Approval", "E-book", "Question Bank"],
+            description: "Mengembangkan sistem manajemen akademik HIMATIKA berbasis React dan Supabase, fitur e-book, question bank, konsultasi, notifikasi real-time, workflow approval, RLS, upload dokumen, serta UI responsif dan caching.",
+            github: "https://github.com/Kevinardhana096/webAkademikReact",
+            demo: "https://web-akademik-react.vercel.app/"
+        },
         {
             title: "EasyCook Website",
             tech: ["React", "Node.js", "SQLite", "Flask API", "Tailwind CSS", "DaisiesUI"],
