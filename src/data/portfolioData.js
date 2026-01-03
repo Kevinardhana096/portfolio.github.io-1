@@ -32,6 +32,13 @@ export const portfolioData = {
     ],
     experience: [
         {
+            title: "Koordinator Pengembang Aplikasi (Lead Developer)",
+            company: "Olimpiade MATICS - HIMATIKA FMIPA Unhas",
+            period: "Agustus 2025 - Februari 2026",
+            description: "Mengembangkan website utama serta platform Computer Based Test (CBT) terintegrasi untuk mendukung penyelenggaraan olimpiade secara digital. Memimpin tim pengembang dalam memastikan skalabilitas, keamanan, dan performa aplikasi selama kompetisi berlangsung.",
+            image: null
+        },
+        {
             title: "Lab Assistant Python",
             company: "Universitas Hasanuddin",
             period: "Aug 2025 - Dec 2025",
@@ -57,7 +64,7 @@ export const portfolioData = {
             company: "Universitas Hasanuddin",
             period: "Jan 2025 - Jul 2025",
             description: "Membantu dosen dalam pelaksanaan praktikum OOP Java untuk mahasiswa Sistem Informasi, membuat materi praktikum, membimbing mahasiswa dalam pemrograman berorientasi objek, serta melakukan penilaian tugas dan ujian praktikum.",
-            image: null
+            image: "/aslab_oop.png"
         },
         {
             title: " UX Today Competition",

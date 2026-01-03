@@ -51,21 +51,49 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
-/* Disable animations untuk low-end devices */
-@media (max-width: 1024px) {
-    * {
-        animation-duration: 0.2s !important;
-        transition-duration: 0.2s !important;
+/* Horizontal scroll optimization */
+.timeline-scroll-container {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+}
+
+.timeline-card,
+.timeline-item-horizontal {
+    content-visibility: auto;
+    contain-intrinsic-size: 350px 500px;
+}
+
+/* Reduce animation on scroll for better performance */
+@media (prefers-reduced-motion: no-preference) {
+    .timeline-scroll-container {
+        scroll-behavior: auto;
+    }
+}
+
+/* Optimasi untuk tablet - selective animation reduction */
+@media (min-width: 769px) and (max-width: 1024px) {
+
+    /* Hanya perlambat animasi yang terlalu kompleks */
+    .floating-tech-icons,
+    .about-floating-badges {
+        animation-duration: 0.3s !important;
+    }
+
+    /* Optimize horizontal scroll for tablet */
+    .timeline-card:hover {
+        transform: translateY(-6px) scale(1.01) !important;
     }
 }
 
 /* Optimasi untuk mobile */
 @media (max-width: 768px) {
 
-    /* Reduce animation complexity */
-    * {
-        animation-duration: 0.15s !important;
-        transition-duration: 0.15s !important;
+    /* Reduce animation complexity for mobile only */
+    .floating-tech-icons,
+    .about-floating-badges,
+    .hero-particles {
+        animation-duration: 0.2s !important;
+        transition-duration: 0.2s !important;
     }
 
     /* Simplify shadows */
@@ -74,6 +102,10 @@
     .timeline-item,
     .expertise-card {
         box-shadow: var(--shadow-small) !important;
+    }
+
+    .timeline-card {
+        box-shadow: none !important;
     }
 
     /* Disable heavy animations */
@@ -89,31 +121,45 @@
         animation: none !important;
     }
 
+    .timeline-dot-inner {
+        animation: none !important;
+    }
+
     .hero-grid {
         opacity: 0.2 !important;
         background-size: 100px 100px !important;
     }
 
-    /* Optimize images */
-    img {
-        image-rendering: -webkit-optimize-contrast;
-        image-rendering: crisp-edges;
+    /* Optimize horizontal scroll for mobile */
+    .timeline-card {
+        backdrop-filter: blur(5px) !important;
     }
 
-    /* Reduce backdrop blur */
-    .navbar,
-    .about-profile-card,
-    .project-card {
-        backdrop-filter: blur(3px) !important;
-        -webkit-backdrop-filter: blur(3px) !important;
+    .experience-image {
+        image-rendering: auto;
     }
+}
 
-    /* Disable hover effects */
-    .project-card:hover,
-    .expertise-card:hover,
-    .skill-tag:hover {
-        transform: none !important;
-    }
+/* Optimize images */
+img {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+}
+
+/* Reduce backdrop blur */
+.navbar,
+.about-profile-card,
+.project-card {
+    backdrop-filter: blur(3px) !important;
+    -webkit-backdrop-filter: blur(3px) !important;
+}
+
+/* Disable hover effects */
+.project-card:hover,
+.expertise-card:hover,
+.skill-tag:hover {
+    transform: none !important;
+}
 }
 
 /* Reduce motion for accessibility and performance */
