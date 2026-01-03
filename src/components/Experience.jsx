@@ -6,13 +6,22 @@ function Experience({ portfolioData }) {
     const scrollContainerRef = useRef(null)
 
     useEffect(() => {
-        if (scrollContainerRef.current) {
-            const itemCount = portfolioData.experience.length
-            const itemWidth = 350 // width of each card
-            const gap = 48 // 3rem = 48px
-            const totalWidth = (itemWidth * itemCount) + (gap * (itemCount - 1))
-            scrollContainerRef.current.style.setProperty('--timeline-width', `${totalWidth}px`)
+        const updateTimelineWidth = () => {
+            if (scrollContainerRef.current) {
+                const itemCount = portfolioData.experience.length
+                const isMobile = window.innerWidth < 768
+                const itemWidth = isMobile ? 280 : 350 // width of each card
+                const gap = 48 // 3rem = 48px (same for all)
+                const totalWidth = (itemWidth * itemCount) + (gap * (itemCount - 1))
+                scrollContainerRef.current.style.setProperty('--timeline-width', `${totalWidth}px`)
+            }
         }
+
+        updateTimelineWidth()
+
+        // Update on resize
+        window.addEventListener('resize', updateTimelineWidth)
+        return () => window.removeEventListener('resize', updateTimelineWidth)
     }, [portfolioData.experience.length])
 
     return (
