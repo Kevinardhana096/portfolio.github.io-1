@@ -71,7 +71,7 @@ export const portfolioData = {
             company: "KM FMIPA UNHAS",
             period: "Feb 2024 - Jun 2024",
             description: "Mengelola tim dokumentasi selama rangkaian acara Inauguration KM FMIPA UNHAS 2023, bertanggung jawab atas pengambilan foto dan video, serta pengarsipan materi dokumentasi untuk keperluan publikasi dan laporan kegiatan.",
-            image: null
+            image: "/koordinator_inaugurasi.JPG"
         }
     ],
     projects: [
