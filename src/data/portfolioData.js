@@ -36,7 +36,7 @@ export const portfolioData = {
             company: "Olimpiade MATICS - HIMATIKA FMIPA Unhas",
             period: "Agustus 2025 - Februari 2026",
             description: "Mengembangkan website utama serta platform Computer Based Test (CBT) terintegrasi untuk mendukung penyelenggaraan olimpiade secara digital. Memimpin tim pengembang dalam memastikan skalabilitas, keamanan, dan performa aplikasi selama kompetisi berlangsung.",
-            image: null
+            image: "/koordinator_tpa.jpeg"
         },
         {
             title: "Lab Assistant Python",

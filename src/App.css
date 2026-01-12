@@ -4081,3 +4081,158 @@ section:nth-child(even)::before {
     animation-duration: 6s !important;
   }
 }
+
+/* --- INSERTED INSTAGRAM MODAL STYLES --- */
+/* Instagram-style Image Modal */
+.ig-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.95);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999999;
+  cursor: pointer;
+}
+
+.ig-modal-content {
+  position: relative;
+  padding: 0;
+  background: transparent;
+  border-radius: 0;
+  cursor: default;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ig-modal-image {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 90vw;
+  max-height: 85vh;
+  object-fit: contain;
+  border-radius: 4px;
+  border: none;
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
+  transition: opacity 0.3s ease;
+}
+
+.ig-modal-loading {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 4px;
+}
+
+.ig-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(255, 255, 255, 0.2);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: ig-spin 0.8s linear infinite;
+}
+
+@keyframes ig-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.ig-close-btn {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 44px;
+  height: 44px;
+  background: transparent;
+  border: none;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.8;
+  transition: opacity 0.2s;
+}
+
+.ig-close-btn:hover {
+  opacity: 1;
+}
+
+/* Image Wrapper Overlay on Card - Override */
+.experience-image-wrapper {
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  border-radius: 12px 12px 0 0;
+  display: block !important;
+}
+
+.experience-image-wrapper .image-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  color: white;
+  z-index: 2;
+}
+
+.experience-image-wrapper .image-overlay span {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.experience-image-wrapper:hover .image-overlay {
+  opacity: 1;
+}
+
+.experience-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.timeline-card:hover .experience-image {
+  transform: scale(1.1);
+}
+
+@media (max-width: 768px) {
+  .ig-modal-image {
+    max-width: 95vw;
+    max-height: 80vh;
+  }
+
+  .experience-image-wrapper {
+    height: 160px;
+  }
+}
+
+@media (max-width: 480px) {
+  .ig-modal-image {
+    max-width: 100vw;
+    max-height: 70vh;
+  }
+
+  .ig-close-btn {
+    top: 15px;
+    right: 15px;
+  }
+}
