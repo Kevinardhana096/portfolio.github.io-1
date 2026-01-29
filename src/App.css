@@ -110,9 +110,8 @@ body {
   width: 100%;
 }
 
-.hero .container,
-.container {
-  max-width: 100%;
+.hero-container {
+  max-width: none;
   width: 100%;
   padding: 0 2rem;
   box-sizing: border-box;
@@ -120,8 +119,7 @@ body {
 
 @media (max-width: 768px) {
 
-  .hero .container,
-  .container {
+  .hero-container {
     padding: 0 1.5rem;
   }
 }
@@ -132,7 +130,7 @@ body {
     padding-right: 1rem;
   }
 
-  .hero .container {
+  .hero-container {
     padding: 0 1rem;
   }
 }
@@ -162,6 +160,7 @@ body {
     font-size: 0.8rem;
     margin-bottom: 0.5rem;
   }
+
 
   .level-bar {
     height: 2px;
@@ -3967,9 +3966,9 @@ section:nth-child(even)::before {
     padding: 2rem 0 3rem;
   }
 
-  .hero .container {
+  .hero-container {
     width: 100%;
-    max-width: 100%;
+    max-width: none;
     overflow-x: hidden;
   }
 

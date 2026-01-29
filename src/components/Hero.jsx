@@ -73,7 +73,7 @@ function Hero({ scrollToSection, typedText, portfolioData, onLoad }) {
                     </div>
                 )}
             </div>
-            <div className="container">
+            <div className="hero-container">
                 <motion.div
                     className="hero-content"
                     initial={{ opacity: 0 }}
